@@ -4,8 +4,8 @@ WORKDIR /home/node/app
 COPY package.json .
 RUN npm i
 
-COPY src .
+COPY src src
 
 USER node
 
-CMD ["node", "index.js"]
+CMD ["node", "dist/index.js"]
