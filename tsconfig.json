@@ -7,7 +7,7 @@
         "target": "ES2022",
         "outDir": "dist",
         "moduleResolution": "node",
-        "module": "ESNext"
+        "module": "node16"
     },
     "include": [
         "src/**/*"
