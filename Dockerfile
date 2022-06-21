@@ -1,7 +1,7 @@
 FROM node:alpine
 
 WORKDIR /home/node/app
-COPY package.json .
+COPY *.json .
 RUN npm i
 
 COPY src src
