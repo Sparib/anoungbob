@@ -2,6 +2,7 @@ FROM node:alpine
 
 WORKDIR /home/node/app
 COPY *.json .
+COPY src/.env .
 RUN npm i
 
 COPY src src
