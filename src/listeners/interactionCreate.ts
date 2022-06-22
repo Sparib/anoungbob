@@ -1,4 +1,4 @@
-import { BaseCommandInteraction, Client, Interaction } from "discord.js";
+import { BaseCommandInteraction, Client, IntegrationApplication, Interaction } from "discord.js";
 import { Commands } from "../Commands";
 
 export default (client: Client): void => {
@@ -9,14 +9,14 @@ export default (client: Client): void => {
     });
 };
 
-const handleSlashCommand = async (client: Client, interaction: BaseCommandInteraction) => {
+const handleSlashCommand = async (client: Client, interaction: BaseCommandInteraction): Promise<void> => {
     const slashCommand = Commands.find(c => c.name === interaction.commandName);
     if (!slashCommand) {
         interaction.followUp({content: "An error has occurred.", ephemeral: true});
         return;
     }
 
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: slashCommand.ephemeral});
 
     slashCommand.run(client, interaction);
 };
