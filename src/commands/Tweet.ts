@@ -12,7 +12,7 @@ var entities = {
 };
 var entityPattern = /&([a-z]+);/ig;
 
-function decodeHTML(text: string): string {
+export function decodeHTML(text: string): string {
     // A single replace pass with a static RegExp is faster than a loop
     return text.replace(entityPattern, function (match: string, entity: string) {
         entity = entity.toLowerCase();
