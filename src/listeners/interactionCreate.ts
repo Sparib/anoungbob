@@ -25,5 +25,10 @@ const handleSlashCommand = async (client: Client, interaction: BaseCommandIntera
 
     await interaction.deferReply({ephemeral: slashCommand.ephemeral});
 
-    slashCommand.run(client, interaction);
+    try {
+        await slashCommand.run(client, interaction);
+    } catch (e) {
+        console.error(e);
+        await interaction.followUp({content: "An error occurred running the command"});
+    }
 };
