@@ -1,18 +1,16 @@
 import { BaseCommandInteraction, Client } from "discord.js";
-import { Command } from "../Command";
+import { Command } from "src/Command";
 
-const Hello: Command = {
-    name: "hello",
-    description: "returns a greeting",
+const Ping: Command = {
+    name: "ping",
+    description: "Typical ping thing",
     type: "CHAT_INPUT",
     ephemeral: true,
     run: async (client: Client, interaction: BaseCommandInteraction) => {
-        const content = "Hello there!";
-
         await interaction.followUp({
-            content
+            content: "Pong!"
         });
     }
 };
 
-export default Hello;
+export default Ping;
