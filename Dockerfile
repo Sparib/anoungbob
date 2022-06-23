@@ -9,6 +9,9 @@ RUN npm i --production
 # Copy output folder
 COPY out src
 
+# Set TZ
+ENV TZ="America/New_York"
+
 USER node
 
 CMD ["node", "src/Bot.js"]
