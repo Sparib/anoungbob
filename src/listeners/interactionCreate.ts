@@ -1,5 +1,5 @@
 import { BaseCommandInteraction, Client, GuildResolvable, IntegrationApplication, Interaction } from "discord.js";
-import { Commands } from "src/Commands";
+import { Commands } from "../Commands";
 import { Command } from "../Command";
 
 export default (client: Client): void => {
@@ -16,19 +16,14 @@ const handleSlashCommand = async (client: Client, interaction: BaseCommandIntera
         return;
     }
 
-    const commands = client.application.commands.cache;
-
     const slashCommand = (await Commands()).find(c => c.name === interaction.commandName);
-    console.log(slashCommand);
 
     if (!slashCommand) {
         await interaction.reply({content: "An error has occurred.", ephemeral: true});
         return;
     }
 
-    await interaction.reply({content: "logs", ephemeral: true});
+    await interaction.deferReply({ephemeral: slashCommand.ephemeral});
 
-//     await interaction.deferReply({ephemeral: slashCommand.ephemeral});
-
-//     slashCommand.run(client, interaction);
+    slashCommand.run(client, interaction);
 };
