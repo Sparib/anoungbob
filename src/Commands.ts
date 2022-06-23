@@ -15,6 +15,11 @@ export const Commands = async (): Promise<Command[]> => {
                     const fP = path.replace("/src", "") + "/" + t.name.replace(".js", "");
         
                     const command: Command = (await import(fP)).default as Command;
+
+                    if (command === undefined || command === null) {
+                        console.error(`Command at path ${fP} is ${command}. Does it have a default export?`);
+                        continue;
+                    }
                     
                     commands.push(command);
                 } else if (t.isDirectory()) {
