@@ -9,7 +9,30 @@ interface searchResult {
     test: string
 }
 
-export async function get_tweet() {
+export interface tweetInfo {
+    data: {
+        text: string,
+        attachments?: {
+            media_keys: string[]
+        },
+        id: string,
+        author_id: string
+    },
+    includes: {
+        media?: [{media_key: string, type: string, url: string}],
+        users: [
+            {
+                username: string,
+                profile_image_url: string,
+                name: string,
+                id: string
+            }
+        ]
+    }
+    word: string
+}
+
+export async function get_tweet(): Promise<tweetInfo | null> {
     var wordlist!: string[];
     const query = "?query=-is:retweet -is:reply -is:quote lang:en !"
     if (process.env.TWITTER_TOKEN === undefined) throw new Error(".env was not successfully loaded! Cannot access twitter or discord token.");
@@ -23,15 +46,14 @@ export async function get_tweet() {
         });
 
     var tweet: searchResult | undefined;
+    var tweetWord!: string;
 
     // Loop each word
     for (const word of wordlist) {
         console.log(word);
-
         // Set up api uri and encode the query
         let apiUriDec = "https://api.twitter.com/2/tweets/search/recent" + query.replace("!", word);
         let apiUriEnc = encodeURI(apiUriDec);
-        console.log(apiUriEnc);
 
         let resp: AxiosResponse | undefined;
 
@@ -65,20 +87,25 @@ export async function get_tweet() {
                 // Check if include field exists
                 if (tweetAttrib.data.includes != undefined) continue;
                 tweet = t;
+                tweetWord = word;
                 break;
             }
         }
 
-        console.log("~".repeat(20));
-
         if (tweet !== undefined) break;
     }
 
-    if (tweet === undefined) return;
+    if (tweet === undefined) return null;
 
-    await axios.get(encodeURI("https://api.twitter.com/2/tweets/" + tweet.id + "?expansions=author_id,attachments.media_keys&media.fields=url&user.fields=name,username,profile_image_url,url"), reqC)
-        .then(resp => console.log(JSON.stringify(resp.data, null, '    ')))
+    var toReturn!: tweetInfo;
+
+    await axios.get(encodeURI("https://api.twitter.com/2/tweets/" + tweet.id + "?expansions=author_id,attachments.media_keys&media.fields=url&user.fields=name,username,profile_image_url"), reqC)
+        .then(resp => toReturn = resp.data as tweetInfo)
         .catch(e => console.log(e));
 
-    console.log(tweet.id);
+    if (!toReturn) throw new Error("What how");
+
+    console.log(JSON.stringify(toReturn, null, '    '));
+    toReturn.word = tweetWord;
+    return toReturn;
 }
