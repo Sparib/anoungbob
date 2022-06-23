@@ -4,7 +4,7 @@ FROM node:alpine
 WORKDIR /home/node/app
 COPY *.json . 
 COPY .env .
-RUN npm i --production
+RUN npm i --omit="dev"
 
 # Copy output folder
 COPY out src
