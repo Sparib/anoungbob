@@ -9,7 +9,7 @@ dotenv.config();
 console.log("Bot is starting...");
 
 const client = new Client({
-    intents: []
+    intents: ['GUILD_MESSAGES', 'GUILD_MESSAGE_TYPING', 'GUILDS']
 });
 
 ready(client);
