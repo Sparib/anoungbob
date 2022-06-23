@@ -30,6 +30,10 @@ const Tweet: Command = {
     type: "CHAT_INPUT",
     ephemeral: true,
     run: async (client: Client, interaction: BaseCommandInteraction) => {
+        if (interaction.user.id !== process.env.DISCORD_SPARIB_ID) {
+            await interaction.followUp({ content: "You do not have the permission to do this!" });
+            return;
+        }
         const tweet: tweetInfo | null = await get_tweet();
         if (tweet === null) {
             await interaction.followUp({ content: "An error occurred retrieving the tweet." });
