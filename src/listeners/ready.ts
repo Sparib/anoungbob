@@ -35,11 +35,9 @@ async function timings(client: Client) {
         }
 
         const guild = client.guilds.cache.get(`${process.env.DISCORD_GUILD_ID}`);
-        console.log(guild);
         if (guild === null || guild === undefined) return;
 
         const channel = guild.channels.cache.get(`${process.env.DISCORD_CHANNEL_ID}`);
-        console.log(channel);
         if (channel === null || channel === undefined || !channel.isText()) return;
 
         const textChannel = channel as TextBasedChannel;
