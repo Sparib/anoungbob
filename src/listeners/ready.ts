@@ -27,7 +27,7 @@ async function timings(client: Client) {
     const run = async () => {
         while (date.getHours() != 12) {
             console.log("not");
-            await sleep(30 * 60 * 1000);
+            await sleep(3 * 60 * 1000);
             date = new Date();
         }
 
