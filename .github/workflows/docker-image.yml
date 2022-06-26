@@ -24,7 +24,10 @@ jobs:
         username: ${{ secrets.REG_USER }}
         password: ${{ secrets.REG_PASS }}
     - name: Build the Docker image
-      run: docker buildx build -t docker.sparib.com/twitter-used --push .
+      run: |
+        npm i
+        npm run files
+        docker buildx build -t docker.sparib.com/twitter-used --push .
     - name: Send update hook
       uses: johannes-huther/webhook.sh@v1.0.0
       env:
