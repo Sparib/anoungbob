@@ -7,7 +7,7 @@
     "build": "tsc --build && minify ./dist -d out --mangle --simplify --mergeVars && rmdir /S /Q .\\dist && docker build -t anoungbob . && rmdir /S /Q .\\out && docker image prune -f",
     "start": "docker run -it --rm --name test-bot anoungbob",
     "test": "npm run build && pause && npm start",
-    "files": "tsc --build && minify ./dist -d out --mangle --simplify --mergeVars"
+    "files": "tsc --build && minify -d out --mangle --simplify --mergeVars dist"
   },
   "author": "",
   "license": "ISC",
