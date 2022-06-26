@@ -23,12 +23,15 @@ jobs:
         registry: docker.sparib.com
         username: ${{ secrets.REG_USER }}
         password: ${{ secrets.REG_PASS }}
+    - name: Build tsc
+      run: npm i && tsc --build
+    - name: Minify js
+      uses: nizarmah/auto-minify@v2.1
+      with:
+        directory: 'dist'
+        output: 'out'
     - name: Build the Docker image
-      run: |
-        npm i
-        npx tsc --build
-        npx minify -d out --mangle --simplify --mergeVars ./dist/
-        docker buildx build -t docker.sparib.com/twitter-used --push .
+      run: docker buildx build -t docker.sparib.com/twitter-used --push .
     - name: Send update hook
       uses: johannes-huther/webhook.sh@v1.0.0
       env:
