@@ -7,10 +7,8 @@ const Hello: Command = {
     type: "CHAT_INPUT",
     ephemeral: true,
     run: async (client: Client, interaction: BaseCommandInteraction) => {
-        const content = "Hello there!";
-
         await interaction.followUp({
-            content
+            content: "Hello There!"
         });
     }
 };
