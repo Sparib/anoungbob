@@ -30,26 +30,21 @@ async function timings(client: Client) {
             date = new Date();
         }
 
-        console.log("Check env");
         if (process.env.DISCORD_GUILD_ID === undefined || process.env.DISCORD_CHANNEL_ID === undefined) {
             return;
         }
 
-        console.log("Get guild");
         const guild = client.guilds.cache.get(`${process.env.DISCORD_GUILD_ID}`);
         console.log(guild);
         if (guild === null || guild === undefined) return;
 
-        console.log("Get channel");
         const channel = guild.channels.cache.get(`${process.env.DISCORD_CHANNEL_ID}`);
         console.log(channel);
         if (channel === null || channel === undefined || !channel.isText()) return;
 
-        console.log("Get text channel");
         const textChannel = channel as TextBasedChannel;
         if (textChannel === null || textChannel === undefined) return;
 
-        console.log("Send typing");
         textChannel.sendTyping();
         
         const tweet: tweetInfo | null = await get_tweet();

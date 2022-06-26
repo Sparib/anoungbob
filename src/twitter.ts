@@ -105,7 +105,6 @@ export async function get_tweet(): Promise<tweetInfo | null> {
 
     if (!toReturn) throw new Error("What how");
 
-    console.log(JSON.stringify(toReturn, null, '    '));
     toReturn.word = tweetWord;
     return toReturn;
 }
