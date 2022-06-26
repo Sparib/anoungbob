@@ -26,7 +26,8 @@ jobs:
     - name: Build the Docker image
       run: |
         npm i
-        npm run files
+        npx tsc --build
+        npx minify -d out --mangle --simplify --mergeVars ./dist/
         docker buildx build -t docker.sparib.com/twitter-used --push .
     - name: Send update hook
       uses: johannes-huther/webhook.sh@v1.0.0
