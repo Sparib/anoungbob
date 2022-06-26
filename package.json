@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --build && npx minify ./dist -d out --mangle --simplify --mergeVars && rmdir /S /Q .\\dist && docker build -t anoungbob . && rmdir /S /Q .\\out && docker image prune -f",
+    "build": "tsc --build && minify ./dist -d out --mangle --simplify --mergeVars && rmdir /S /Q .\\dist && docker build -t anoungbob . && rmdir /S /Q .\\out && docker image prune -f",
     "start": "docker run -it --rm --name test-bot anoungbob",
     "test": "npm run build && pause && npm start",
-    "files": "tsc --build && npx minify ./dist -d out --mangle --simplify --mergeVars"
+    "files": "tsc --build && minify ./dist -d out --mangle --simplify --mergeVars"
   },
   "author": "",
   "license": "ISC",
