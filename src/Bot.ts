@@ -19,8 +19,6 @@ client.login(process.env.DISCORD_TOKEN);
 
 // Handle SIGINT and kill process
 process.on('SIGINT', () => {
-    console.log("\nInterrupt");
     client.destroy();
-    console.log("Destroyed");
     process.exit(0);
 });
