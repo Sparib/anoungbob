@@ -31,7 +31,7 @@ const Tweet: Command = {
     type: "CHAT_INPUT",
     ephemeral: true,
     run: async (client: Client, interaction: BaseCommandInteraction) => {
-        if (interaction.user.id !== config.DISCORD_SPARIB_ID) {
+        if (interaction.user.id as string !== config.DISCORD_SPARIB_ID) {
             await interaction.followUp({ content: "You do not have the permission to do this!" });
             return;
         }
