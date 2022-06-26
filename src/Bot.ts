@@ -1,4 +1,3 @@
-import { get_tweet } from './twitter';
 import { Client } from "discord.js";
 import dotenv from 'dotenv';
 import ready from './listeners/ready';
