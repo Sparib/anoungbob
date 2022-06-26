@@ -1,4 +1,4 @@
-import { BaseCommandInteraction, Client, GuildResolvable, IntegrationApplication, Interaction } from "discord.js";
+import { BaseCommandInteraction, Client, Interaction } from "discord.js";
 import { Commands } from "../Commands";
 import { Command } from "../Command";
 
