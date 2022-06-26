@@ -1,0 +1,56 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build_docker:
+
+    runs-on: ubuntu-latest
+    needs: test
+    
+    if: needs.test.outputs.should_update == 'true'
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to Registry
+      uses: docker/login-action@v1.14.1
+      with:
+        registry: docker.sparib.com
+        username: ${{ secrets.REG_USER }}
+        password: ${{ secrets.REG_PASS }}
+    - name: Build the Docker image
+      run: docker buildx build -t docker.sparib.com/twitter-used --push .
+    - name: Send update hook
+      uses: johannes-huther/webhook.sh@v1.0.0
+      env:
+        webhook_url: https://docker.sparib.com/twitter-used
+        webhook_secret: ${{ secrets.WEB_SECRET }}
+        webhook_type: json
+        
+  test:
+    runs-on: ubuntu-latest
+    outputs:
+      should_update: ${{ steps.test_files.outputs.update }}
+    steps:
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: 'csv'
+      - id: test_files        
+        run: |
+          mapfile -d ',' -t modified_files < <(printf '%s,' '${{ steps.files.outputs.modified }}')
+          update=false
+          for modified_file in "${modified_files[@]}"; do
+            if [[ "${modified_file}" == *"src/"* ]]; then
+              update=true
+              break
+            fi
+          done
+          echo "::set-output name=update::${update}"
+          echo "${update}"
+      
