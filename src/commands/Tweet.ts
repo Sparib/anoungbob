@@ -1,6 +1,7 @@
 import { BaseCommandInteraction, Client, MessageEmbed } from "discord.js";
 import { Command } from "../Command";
 import { get_tweet, tweetInfo } from "../twitter";
+import { config } from "../Bot";
 
 var entities = {
     'amp': '&',
@@ -30,7 +31,7 @@ const Tweet: Command = {
     type: "CHAT_INPUT",
     ephemeral: true,
     run: async (client: Client, interaction: BaseCommandInteraction) => {
-        if (interaction.user.id !== process.env.DISCORD_SPARIB_ID) {
+        if (interaction.user.id !== config.DISCORD_SPARIB_ID) {
             await interaction.followUp({ content: "You do not have the permission to do this!" });
             return;
         }

@@ -2,6 +2,7 @@ import { Client, MessageEmbed, TextBasedChannel } from "discord.js";
 import { decodeHTML } from "../commands/Tweet";
 import { get_tweet, tweetInfo } from "../twitter";
 import { Commands } from "../Commands";
+import { config } from '../Bot';
 
 export default (client: Client): void => {
     client.on("ready", async () => {
@@ -30,14 +31,14 @@ async function timings(client: Client) {
             date = new Date();
         }
 
-        if (process.env.DISCORD_GUILD_ID === undefined || process.env.DISCORD_CHANNEL_ID === undefined) {
+        if (config.DISCORD_GUILD_ID === undefined || config.DISCORD_CHANNEL_ID === undefined) {
             return;
         }
 
-        const guild = client.guilds.cache.get(`${process.env.DISCORD_GUILD_ID}`);
+        const guild = client.guilds.cache.get(`${config.DISCORD_GUILD_ID}`);
         if (guild === null || guild === undefined) return;
 
-        const channel = guild.channels.cache.get(`${process.env.DISCORD_CHANNEL_ID}`);
+        const channel = guild.channels.cache.get(`${config.DISCORD_CHANNEL_ID}`);
         if (channel === null || channel === undefined || !channel.isText()) return;
 
         const textChannel = channel as TextBasedChannel;

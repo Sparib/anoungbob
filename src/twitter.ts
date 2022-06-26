@@ -1,8 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { randomInt } from 'crypto';
-import { config } from 'dotenv';
-
-config();
+import { config } from './Bot';
 
 interface searchResult {
     id: number,
@@ -35,8 +33,8 @@ export interface tweetInfo {
 export async function get_tweet(): Promise<tweetInfo | null> {
     var wordlist!: string[];
     const query = "?query=-is:retweet -is:reply -is:quote lang:en !"
-    if (process.env.TWITTER_TOKEN === undefined) throw new Error(".env was not successfully loaded! Cannot access twitter or discord token.");
-    const reqC = { headers: { "Authorization": "Bearer " + process.env.TWITTER_TOKEN } };
+    if (config.TWITTER_TOKEN === undefined) throw new Error(".env was not successfully loaded! Cannot access twitter or discord token.");
+    const reqC = { headers: { "Authorization": "Bearer " + config.TWITTER_TOKEN } };
 
     // Get 20 random english words
     await axios.get("https://random-word-api.herokuapp.com/word?lang=en&number=20")

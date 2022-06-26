@@ -12,7 +12,7 @@ export const Commands = async (): Promise<Command[]> => {
             const dir = fs.readdirSync(path, {withFileTypes: true});
             for (const t of dir) {
                 if (t.isFile() && t.name.endsWith(".js")) {
-                    const fP = path.replace("/src", "") + "/" + t.name.replace(".js", "");
+                    const fP = path.replace("/out", "") + "/" + t.name.replace(".js", "");
         
                     const command: Command = (await import(fP)).default as Command;
 
@@ -28,7 +28,7 @@ export const Commands = async (): Promise<Command[]> => {
             }
         }
         
-        await loopDir("./src/commands");
+        await loopDir("./out/commands");
 
         cachedCommands = commands;
     }
