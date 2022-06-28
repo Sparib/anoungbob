@@ -21,16 +21,7 @@ async function timings(client: Client) {
     while (!client.isReady()) sleep(500);
     console.log("is ready");
 
-    var date = new Date();
-    console.log(date.getHours());
-
     const run = async () => {
-        while (date.getHours() != 12) {
-            console.log("not");
-            await sleep(3 * 60 * 1000);
-            date = new Date();
-        }
-
         if (config.DISCORD_GUILD_ID === undefined || config.DISCORD_CHANNEL_ID === undefined) {
             return;
         }
